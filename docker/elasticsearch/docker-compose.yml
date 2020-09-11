@@ -1,0 +1,30 @@
+version: '2.3'
+
+services:
+
+# Elastic services
+## Elasticsearch service
+  elasticsearch:
+    build: .
+    container_name: elasticsearch
+    stdin_open: true
+    tty: true
+    restart: always
+    environment:
+     - ES_JAVA_OPTS=-Xms2048m -Xmx2048m
+     - ES_TMPDIR=/tmp
+    cap_add:
+     - IPC_LOCK
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    mem_limit: 4g
+    ports:
+     - "127.0.0.1:64298:9200"
+    image: "ghcr.io/t3chn0m4g3/elasticsearch:latest"
+    volumes:
+     - /data:/data

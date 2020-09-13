@@ -43,7 +43,7 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     rm -rf /var/cache/apk/*
 #
 # Healthcheck
-HEALTHCHECK --retries=10 CMD curl --cacert /usr/sahre/elasticsearch/config/certs/ca/ca.crt -s https://127.0.0.1:9200 >/dev/null; if [[ $$? == 52 ]]; then echo 0; else echo 1; fi
+HEALTHCHECK --retries=10 CMD curl --cacert /usr/share/elasticsearch/config/certs/ca/ca.crt -s https://127.0.0.1:9200 >/dev/null; if [[ $$? == 52 ]]; then echo 0; else echo 1; fi
 #
 # Start ELK
 USER elasticsearch:elasticsearch

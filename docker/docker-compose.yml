@@ -29,3 +29,20 @@ services:
     volumes:
      - /data:/data
      - /data/elastic/certs:/usr/share/elasticsearch/config/certs
+
+## Kibana service
+  kibana:
+    build: .
+    container_name: kibana
+    restart: always
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    ports:
+     - "5601:5601"
+    environment:
+      ELASTICSEARCH_USERNAME: kibana_system
+      ELASTICSEARCH_PASSWORD: CHANGEME
+    image: "ghcr.io/t3chn0m4g3/kibana:latest"
+    volumes:
+     - /data/elastic/certs:/usr/share/kibana/config/certs

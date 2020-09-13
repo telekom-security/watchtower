@@ -20,10 +20,10 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     cd /root/dist/ && \
     mkdir -p /usr/share/elasticsearch/ && \
     aria2c -s 16 -x 16 https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-$ES_VER-linux-x86_64.tar.gz && \
-    tar xvfz elasticsearch-$ES_VER-linux-x86_64.tar.gz --strip-components=1 -C /usr/share/elasticsearch/
+    tar xvfz elasticsearch-$ES_VER-linux-x86_64.tar.gz --strip-components=1 -C /usr/share/elasticsearch/ && \
 #
 # Add and move files
-RUN cd /root/dist/ && \
+    cd /root/dist/ && \
     mkdir -p /usr/share/elasticsearch/config && \
     cp elasticsearch.yml /usr/share/elasticsearch/config/ && \
     cp instances.yml /usr/share/elasticsearch/config/ && \
@@ -43,7 +43,7 @@ RUN cd /root/dist/ && \
     rm -rf /var/cache/apk/*
 #
 # Healthcheck
-HEALTHCHECK --retries=10 CMD curl -s -XGET 'http://127.0.0.1:9200/_cat/health'
+HEALTHCHECK --retries=10 CMD curl --cacert /usr/sahre/elasticsearch/config/certs/ca/ca.crt -s https://127.0.0.1:9200 >/dev/null; if [[ $$? == 52 ]]; then echo 0; else echo 1; fi
 #
 # Start ELK
 USER elasticsearch:elasticsearch

@@ -4,21 +4,26 @@ path:
     logs: /data/elastic/log
     data: /data/elastic/data
 http.host: 0.0.0.0
+network.host: 0.0.0.0
 #http.cors.enabled: true
 #http.cors.allow-origin: "*"
 indices.query.bool.max_clause_count: 2000
 cluster.initial_master_nodes:
-- "elasticsearch"
+- elasticsearch
 discovery.zen.ping.unicast.hosts:
-- localhost 
+- localhost
+- 127.0.0.1
+#discovery.seed_hosts:
+#- localhost
+#- 127.0.0.1
 bootstrap.memory_lock: true
 xpack.security.enabled: true
 xpack.security.http.ssl.enabled: true 
-xpack.security.http.ssl.certificate_authorities: /data/elastic/certs/ca/ca.crt
-xpack.security.http.ssl.key: /data/elastic/certs/elasticsearch/elasticsearch.key
-xpack.security.http.ssl.certificate: /data/elastic/certs/elasticsearch/elasticsearch.crt
+xpack.security.http.ssl.certificate_authorities: /usr/share/elasticsearch/config/certs/ca/ca.crt
+xpack.security.http.ssl.key: /usr/share/elasticsearch/config/certs/elasticsearch/elasticsearch.key
+xpack.security.http.ssl.certificate: /usr/share/elasticsearch/config/certs/elasticsearch/elasticsearch.crt
 xpack.security.transport.ssl.enabled: true 
 xpack.security.transport.ssl.verification_mode: certificate 
-xpack.security.transport.ssl.certificate_authorities: /data/elastic/certs/ca/ca.crt
-xpack.security.transport.ssl.certificate: /data/elastic/certs/elasticsearch/elasticsearch.crt
-xpack.security.transport.ssl.key: /data/elastic/certs/elasticsearch/elasticsearch.key
+xpack.security.transport.ssl.certificate_authorities: /usr/share/elasticsearch/config/certs/ca/ca.crt
+xpack.security.transport.ssl.certificate: /usr/share/elasticsearch/config/certs/elasticsearch/elasticsearch.crt
+xpack.security.transport.ssl.key: /usr/share/elasticsearch/config/certs/elasticsearch/elasticsearch.key

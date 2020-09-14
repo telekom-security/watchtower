@@ -38,9 +38,6 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     echo "xpack.apm.enabled: false" >> /usr/share/kibana/config/kibana.yml && \
     echo "xpack.uptime.enabled: false" >> /usr/share/kibana/config/kibana.yml && \
     echo "xpack.ml.enabled: false" >> /usr/share/kibana/config/kibana.yml && \
-#    echo "xpack.encryptedSavedObjects.encryptionKey: 01234567890123456789012345678901" >> /usr/share/kibana/config/kibana.yml && \
-#    echo "xpack.security.encryptionKey: 01234567890123456789012345678901" >> /usr/share/kibana/config/kibana.yml && \
-#    echo "xpack.reporting.encryptionKey: 01234567890123456789012345678901" >> /usr/share/kibana/config/kibana.yml && \
 #
 # There is no switch to disable Enterprise Search, so we need to remove it
 # In order to remove all X-Pack features we need to use OSS versions

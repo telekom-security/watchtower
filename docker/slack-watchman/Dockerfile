@@ -35,4 +35,4 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
 # Run Slack-Watchman
 STOPSIGNAL SIGINT
 WORKDIR /opt/slack-watchman/
-CMD slack-watchman $SLACK_WATCHMAN_TIMEFRAME $SLACK_WATCHMAN_QUERY --output file
+CMD slack-watchman $SLACK_WATCHMAN_TIMEFRAME $SLACK_WATCHMAN_QUERY --output stdout > $SLACK_WATCHMAN_LOGFILE

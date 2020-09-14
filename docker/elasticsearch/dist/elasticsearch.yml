@@ -1,21 +1,17 @@
 cluster.name: slacktective
 node.name: "elasticsearch"
+xpack.ml.enabled: false
 path:
     logs: /data/elastic/log
     data: /data/elastic/data
 http.host: 0.0.0.0
 network.host: 0.0.0.0
-#http.cors.enabled: true
-#http.cors.allow-origin: "*"
 indices.query.bool.max_clause_count: 2000
 cluster.initial_master_nodes:
 - elasticsearch
 discovery.zen.ping.unicast.hosts:
 - localhost
 - 127.0.0.1
-#discovery.seed_hosts:
-#- localhost
-#- 127.0.0.1
 bootstrap.memory_lock: true
 xpack.security.enabled: true
 xpack.security.http.ssl.enabled: true 

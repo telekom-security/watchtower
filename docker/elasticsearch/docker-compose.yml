@@ -24,7 +24,7 @@ services:
         hard: 65536
     mem_limit: 4g
     ports:
-     - "127.0.0.1:64298:9200"
+     - "127.0.0.1:9200:9200"
     image: "ghcr.io/t3chn0m4g3/elasticsearch:latest"
     volumes:
      - /data:/data

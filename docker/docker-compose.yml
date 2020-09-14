@@ -24,7 +24,7 @@ services:
         hard: 65536
     mem_limit: 4g
     ports:
-     - "127.0.0.1:64298:9200"
+     - "127.0.0.1:9200:9200"
     image: "ghcr.io/t3chn0m4g3/elasticsearch:latest"
     volumes:
      - /data:/data
@@ -43,6 +43,27 @@ services:
     environment:
       ELASTICSEARCH_USERNAME: kibana_system
       ELASTICSEARCH_PASSWORD: CHANGEME
+      ELASTICSEARCH_OBJECTS_ENCRYPTION_KEY: 123456789012345678901234567890ab
+      ELASTICSEARCH_SECURITY_ENCRYPTION_KEY: 123456789012345678901234567890ab
+      ELASTICSEARCH_REPORTING_ENCRYPTION_KEY: 123456789012345678901234567890ab
     image: "ghcr.io/t3chn0m4g3/kibana:latest"
     volumes:
      - /data/elastic/certs:/usr/share/kibana/config/certs
+
+## Logstash service
+  logstash:
+    build: .
+    container_name: logstash
+    restart: always
+    environment:
+     - LS_JAVA_OPTS=-Xms2048m -Xmx2048m
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    environment:
+      ELASTICSEARCH_USERNAME: elastic
+      ELASTICSEARCH_PASSWORD: CHANGEME
+    image: "ghcr.io/t3chn0m4g3/logstash:latest"
+    volumes:
+     - /data:/data
+#     - /root/slacktective/docker/elastic/logstash/dist/logstash.conf:/etc/logstash/conf.d/logstash.conf

@@ -27,8 +27,8 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     mkdir -p /usr/share/elasticsearch/config && \
     cp elasticsearch.yml /usr/share/elasticsearch/config/ && \
     cp instances.yml /usr/share/elasticsearch/config/ && \
-    chmod 777 gen_cert.sh && \ 
-    cp gen_cert.sh / && \
+    cp entrypoint.sh / && \
+    chmod 777 /entrypoint.sh && \ 
 #
 # Setup user, groups and configs
     addgroup -g 1000 elasticsearch && \
@@ -47,4 +47,5 @@ HEALTHCHECK --retries=10 CMD curl --cacert /usr/share/elasticsearch/config/certs
 #
 # Start ELK
 USER elasticsearch:elasticsearch
-CMD /gen_cert.sh && exec /usr/share/elasticsearch/bin/elasticsearch
+#CMD /gen_cert.sh && exec /usr/share/elasticsearch/bin/elasticsearch
+CMD /entrypoint.sh

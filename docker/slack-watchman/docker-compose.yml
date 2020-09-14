@@ -15,8 +15,9 @@ services:
     environment:
      - SLACK_WATCHMAN_TOKEN=
        # The filename will be slack_watchman.log
-     - SLACK_WATCHMAN_LOG_PATH=/opt/slack-watchman/log/
-     - SLACK_WATCHMAN_HOST= 
+     - SLACK_WATCHMAN_LOG_PATH=
+     - SLACK_WATCHMAN_LOGFILE=/opt/slack-watchman/log/slack-watchman_slackoverload.json
+     - SLACK_WATCHMAN_HOST=
      - SLACK_WATCHMAN_PORT=
        # [--users] [--channels] [--pii] [--financial] [--tokens] [--files] [--custom CUSTOM]
      - SLACK_WATCHMAN_QUERY=--all
@@ -25,4 +26,4 @@ services:
     image: "ghcr.io/t3chn0m4g3/slack-watchman:latest"
     read_only: true
     volumes:
-     - /opt/slack-watchman/log:/opt/slack-watchman/log
+     - /data/slack-watchman/log:/opt/slack-watchman/log

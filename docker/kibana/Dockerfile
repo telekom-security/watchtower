@@ -20,6 +20,8 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     ln -s /usr/local/bin/node /usr/share/kibana/node/bin/node && \
 #
 # Setup user, groups and configs
+#    rm -rf /usr/share/kibana/optimize/bundles/* && \
+#    /usr/share/kibana/bin/kibana --optimize --allow-root && \
     sed -i 's/#server.host: "localhost"/server.host: "0.0.0.0"/' /usr/share/kibana/config/kibana.yml && \
     sed -i 's/#elasticsearch.hosts: \["http:\/\/localhost:9200"\]/elasticsearch.hosts: \["https:\/\/elasticsearch:9200"\]/' /usr/share/kibana/config/kibana.yml && \
     echo "server.ssl.enabled: true" >> /usr/share/kibana/config/kibana.yml && \
@@ -28,10 +30,21 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     echo "elasticsearch.ssl.certificateAuthorities: [ \"/usr/share/kibana/config/certs/ca/ca.crt\" ]" >> /usr/share/kibana/config/kibana.yml && \
     echo "elasticsearch.requestTimeout: 60000" >> /usr/share/kibana/config/kibana.yml && \
     echo "elasticsearch.shardTimeout: 60000" >> /usr/share/kibana/config/kibana.yml && \
-#    echo "monitoring.enabled: false" >> /usr/share/kibana/config/kibana.yml && \ 
-    echo "xpack.encryptedSavedObjects.encryptionKey: 01234567890123456789012345678901" >> /usr/share/kibana/config/kibana.yml && \
-    echo "xpack.security.encryptionKey: 01234567890123456789012345678901" >> /usr/share/kibana/config/kibana.yml && \
-    echo "xpack.reporting.encryptionKey: 01234567890123456789012345678901" >> /usr/share/kibana/config/kibana.yml && \
+    echo "xpack.infra.enabled: false" >> /usr/share/kibana/config/kibana.yml && \ 
+    echo "xpack.logstash.enabled: false" >> /usr/share/kibana/config/kibana.yml && \
+    echo "xpack.canvas.enabled: false" >> /usr/share/kibana/config/kibana.yml && \
+    echo "xpack.securitySolution.enabled: false" >> /usr/share/kibana/config/kibana.yml && \
+    echo "xpack.spaces.enabled: false" >> /usr/share/kibana/config/kibana.yml && \
+    echo "xpack.apm.enabled: false" >> /usr/share/kibana/config/kibana.yml && \
+    echo "xpack.uptime.enabled: false" >> /usr/share/kibana/config/kibana.yml && \
+    echo "xpack.ml.enabled: false" >> /usr/share/kibana/config/kibana.yml && \
+#    echo "xpack.encryptedSavedObjects.encryptionKey: 01234567890123456789012345678901" >> /usr/share/kibana/config/kibana.yml && \
+#    echo "xpack.security.encryptionKey: 01234567890123456789012345678901" >> /usr/share/kibana/config/kibana.yml && \
+#    echo "xpack.reporting.encryptionKey: 01234567890123456789012345678901" >> /usr/share/kibana/config/kibana.yml && \
+#
+# There is no switch to disable Enterprise Search, so we need to remove it
+# In order to remove all X-Pack features we need to use OSS versions
+    rm -rf /usr/share/kibana/x-pack/plugins/enterprise_search && \
     chown -R 1000:1000 /usr/share/kibana/ && \
 #
 # Clean up
@@ -46,4 +59,8 @@ HEALTHCHECK --retries=10 CMD curl -s -XGET 'https://127.0.0.1:5601'
 # Start kibana
 STOPSIGNAL SIGKILL
 USER 1000:1000
-CMD /usr/share/kibana/bin/kibana --elasticsearch.username=$ELASTICSEARCH_USERNAME --elasticsearch.password=$ELASTICSEARCH_PASSWORD
+CMD /usr/share/kibana/bin/kibana --elasticsearch.username=$ELASTICSEARCH_USERNAME \
+				 --elasticsearch.password=$ELASTICSEARCH_PASSWORD \
+				 --xpack.encryptedSavedObjects.encryptionKey=$ELASTICSEARCH_OBJECTS_ENCRYPTION_KEY \
+				 --xpack.security.encryptionKey=$ELASTICSEARCH_SECURITY_ENCRYPTION_KEY \
+				 --xpack.reporting.encryptionKey=$ELASTICSEARCH_REPORTING_ENCRYPTION_KEY

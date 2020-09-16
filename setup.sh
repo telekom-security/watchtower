@@ -85,7 +85,7 @@ chown -R 1000:0 /data
 # Start elasticsearch for the first time to gen certs and passwords
 echo "Running Elasticsearch for the first time, please be patient while generating certificates and passwords."
 docker-compose -f docker/elasticsearch/docker-compose.yml up -d
-docker logs -f elasticsearch 2>&1 | grep -m 1 "Cluster health status changed from [YELLOW] to [GREEN]"
+docker logs -f elasticsearch 2>&1 | grep -m 1 " to \[GREEN\]"
 docker-compose -f docker/elasticsearch/docker-compose.yml down -v
 
 # Convert passwords, so we can source them as vars

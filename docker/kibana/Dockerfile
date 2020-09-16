@@ -7,7 +7,11 @@ ENV KB_VER=7.9.1
 RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     apk -U --no-cache add \
             aria2 \
-            curl && \
+            curl \
+            fontconfig \
+            freetype \
+            font-xfree86-type1 \
+            nss && \
 #
 # Get and install packages
     cd /root/ && \

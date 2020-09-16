@@ -55,6 +55,8 @@ if [ "$myPATH" != "$myINSTPATH" ];
   then
     echo "Watchtower needs to be installed into $myINSTPATH."
     echo "Cloning and restarting setup from correct path."
+    mkdir -p /opt
+    cd /opt
     git clone $myGITREPO
     cd $myINSTPATH
     ./$0

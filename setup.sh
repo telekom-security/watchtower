@@ -13,13 +13,20 @@ if [ "$myWHOAMI" != "root" ]
     exit
 fi
 
-# Can elasticsearch start without errors?
+# Do not run again if certificate bundle exists already
+if [ -f /data/elastic/certs/bundle.zip ];
+  then
+    echo "### Certificate bundle already exists. Aborting."
+    exit
+fi
+
+# Elasticsearch needs adjustments to kernel settings
 myVM_MAX_MAP_COUNT=$(grep "vm.max_map_count" /etc/sysctl.conf)
 if [ "$myVM_MAX_MAP_COUNT" == "" ];
   then
     echo "### Now patching sysctl.conf ..."
     echo
-    echo "vm.max_map_count = 262144" | tee -a /etc/sysctl.conf 
+    echo "### vm.max_map_count = 262144" | tee -a /etc/sysctl.conf 
     echo
     echo "### Reloading Kernel Parameter ..."
     sysctl -p
@@ -46,15 +53,15 @@ if [ "$myINST" != "" ]
       apt-get install $myDEPS -y
     done
   else
-    echo "All dependencies are met."
+    echo "### All dependencies are met."
 fi
 
 # Check if cloned to /opt/watchtower
 myPATH=$(pwd)
 if [ "$myPATH" != "$myINSTPATH" ];
   then
-    echo "Watchtower needs to be installed into $myINSTPATH."
-    echo "Cloning and restarting setup from correct path."
+    echo "### Watchtower needs to be installed into $myINSTPATH."
+    echo "### Cloning and restarting setup from correct path."
     mkdir -p /opt
     cd /opt
     git clone $myGITREPO
@@ -64,8 +71,9 @@ if [ "$myPATH" != "$myINSTPATH" ];
 fi
 
 # Create folders
+echo "### Creating folders ..."
 mkdir -vp /data/elastic/{certs,conf,log,data} \
-	  /data/slack-watchtower
+          /data/slack-watchman
 chmod -R 770 /data
 chown -R 1000:0 /data
 
@@ -83,9 +91,9 @@ chown -R 1000:0 /data
 
 
 # Start elasticsearch for the first time to gen certs and passwords
-echo "Running Elasticsearch for the first time, please be patient while generating certificates and passwords."
+echo "### Running Elasticsearch for the first time, please be patient while generating certificates and passwords."
 docker-compose -f docker/elasticsearch/docker-compose.yml up -d
-docker logs -f elasticsearch 2>&1 | grep -m 1 " to \[GREEN\]"
+docker logs -f elasticsearch 2>&1 | grep -m 1 "\[GREEN\]"
 docker-compose -f docker/elasticsearch/docker-compose.yml down -v
 
 # Convert passwords, so we can source them as vars
@@ -103,4 +111,6 @@ sed -i "s/ELASTICSEARCH_REPORTING_ENCRYPTION_KEY.*$/ELASTICSEARCH_REPORTING_ENCR
 rm /data/elastic/conf/passwords.source
 
 # Done.
-echo "Keep the passwords in a safe place and delete them afterwards from /data/elastic/conf/passwords."
+exec ./start.sh
+echo "### Keep the passwords in a safe place and delete them afterwards from /data/elastic/conf/passwords."
+echo "### Done.

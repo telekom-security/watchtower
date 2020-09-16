@@ -9,9 +9,6 @@ services:
     restart: always
     environment:
      - LS_JAVA_OPTS=-Xms2048m -Xmx2048m
-#    depends_on:
-#      elasticsearch:
-#        condition: service_healthy
     image: "ghcr.io/t3chn0m4g3/logstash:latest"
     volumes:
      - /data:/data

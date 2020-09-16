@@ -47,5 +47,4 @@ HEALTHCHECK --retries=10 CMD curl --cacert /usr/share/elasticsearch/config/certs
 #
 # Start ELK
 USER elasticsearch:elasticsearch
-#CMD /gen_cert.sh && exec /usr/share/elasticsearch/bin/elasticsearch
 CMD /entrypoint.sh

@@ -24,10 +24,7 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
 #
 # Clean up
     apk del --purge build-base \
-#                    git \
-#                    libffi-dev \
-#		    openssl-dev \
-#		    postgresql-dev \
+                    git \
 		    python3-dev && \
     rm -rf /root/* && \
     rm -rf /var/cache/apk/*

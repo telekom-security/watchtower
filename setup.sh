@@ -49,16 +49,17 @@ fi
 
 exit
 
-# Create data folders and permission sets
+# Check path, we want /opt/watchtower
+# Automatic install via GitHub
 # Leave setup script in root and adjust paths accordingly
 # fine tune docker-compose files (settings, paths, etc.)
 # Replace token for Watchman
 # Set alias (grc, dps)
 # Set fancy prompt
+# Push config to ELK (dashboards and stuff)
 # Rename project to Slack-Watchtower
 
 
-rm -rf /data/elastic/conf/* /data/elastic/certs/* /data/elastic/data/*
 
 # Start elasticsearch for the first time to gen certs and passwords
 echo "Running Elasticsearch for the first time, please be patient while generating certificates and passwords."

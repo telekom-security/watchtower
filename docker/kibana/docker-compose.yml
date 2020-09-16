@@ -7,9 +7,6 @@ services:
     build: .
     container_name: kibana
     restart: always
-#    depends_on:
-#      elasticsearch:
-#        condition: service_healthy
     ports:
      - "5601:5601"
     environment:

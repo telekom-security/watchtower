@@ -41,5 +41,5 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
 HEALTHCHECK --retries=10 CMD curl -s -XGET 'http://127.0.0.1:9600'
 #
 # Start logstash
-#CMD update.sh && exec /usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf --config.reload.automatic --java-execution --log.level debug
+#CMD /usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf --config.reload.automatic --java-execution --log.level debug
 CMD /usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf --config.reload.automatic --java-execution

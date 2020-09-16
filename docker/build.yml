@@ -1,0 +1,24 @@
+version: '2.3'
+
+services:
+
+# Elastic services
+## Elasticsearch service
+  elasticsearch:
+    build: elasticsearch/.
+    image: "ghcr.io/t3chn0m4g3/elasticsearch:latest"
+
+## Kibana service
+  kibana:
+    build: kibana/.
+    image: "ghcr.io/t3chn0m4g3/kibana:latest"
+
+## Logstash service
+  logstash:
+    build: logstash/.
+    image: "ghcr.io/t3chn0m4g3/logstash:latest"
+
+## Slack-Watchman service
+  slack-watchman:
+    build: slack-watchman/.
+    image: "ghcr.io/t3chn0m4g3/slack-watchman:latest"

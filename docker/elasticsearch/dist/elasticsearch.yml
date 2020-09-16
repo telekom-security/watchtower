@@ -1,4 +1,4 @@
-cluster.name: slacktective
+cluster.name: watchtower
 node.name: "elasticsearch"
 xpack.ml.enabled: false
 path:

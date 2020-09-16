@@ -20,8 +20,6 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     ln -s /usr/local/bin/node /usr/share/kibana/node/bin/node && \
 #
 # Setup user, groups and configs
-#    rm -rf /usr/share/kibana/optimize/bundles/* && \
-#    /usr/share/kibana/bin/kibana --optimize --allow-root && \
     sed -i 's/#server.host: "localhost"/server.host: "0.0.0.0"/' /usr/share/kibana/config/kibana.yml && \
     sed -i 's/#elasticsearch.hosts: \["http:\/\/localhost:9200"\]/elasticsearch.hosts: \["https:\/\/elasticsearch:9200"\]/' /usr/share/kibana/config/kibana.yml && \
     echo "server.ssl.enabled: true" >> /usr/share/kibana/config/kibana.yml && \

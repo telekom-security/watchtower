@@ -6,17 +6,17 @@ services:
 ## Elasticsearch service
   elasticsearch:
     build: elasticsearch/.
-    image: "ghcr.io/t3chn0m4g3/elasticsearch:latest"
+    image: "ghcr.io/t3chn0m4g3/elasticsearch-wt:latest"
 
 ## Kibana service
   kibana:
     build: kibana/.
-    image: "ghcr.io/t3chn0m4g3/kibana:latest"
+    image: "ghcr.io/t3chn0m4g3/kibana-wt:latest"
 
 ## Logstash service
   logstash:
     build: logstash/.
-    image: "ghcr.io/t3chn0m4g3/logstash:latest"
+    image: "ghcr.io/t3chn0m4g3/logstash-wt:latest"
 
 ## Slack-Watchman service
   slack-watchman:

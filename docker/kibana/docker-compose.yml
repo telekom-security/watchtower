@@ -13,6 +13,6 @@ services:
       SERVERNAME: localhost
       ELASTICSEARCH_USERNAME: kibana_system
       ELASTICSEARCH_PASSWORD: CHANGEME
-    image: "ghcr.io/t3chn0m4g3/kibana:latest"
+    image: "ghcr.io/t3chn0m4g3/kibana-wt:latest"
     volumes:
      - /data/elastic/certs:/usr/share/kibana/config/certs

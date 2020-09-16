@@ -25,7 +25,7 @@ services:
     mem_limit: 4g
     ports:
      - "127.0.0.1:9200:9200"
-    image: "ghcr.io/t3chn0m4g3/elasticsearch:latest"
+    image: "ghcr.io/t3chn0m4g3/elasticsearch-wt:latest"
     volumes:
      - /data:/data
      - /data/elastic/certs:/usr/share/elasticsearch/config/certs

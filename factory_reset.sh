@@ -11,7 +11,7 @@ fi
 # Clear all settings, files, passwords, certs for Slack-Watchtower
 echo "### Now removing all contents of /data."
 echo "### This cannot be undone."
-rm -rI /data/elastic /data/watchtower
+rm -rI /data/elastic /data/slack-watchman
 
 # Replace passwords in docker-compose.yml with CHANGEME
 sed -i '/ELASTICSEARCH_USERNAME: kibana_system/!b;n;c\      ELASTICSEARCH_PASSWORD: CHANGEME' docker/docker-compose.yml

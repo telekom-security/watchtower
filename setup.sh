@@ -78,7 +78,6 @@ chmod -R 770 /data
 chown -R 1000:0 /data
 
 # Automatic install via GitHub
-# Pull images
 # First run of everything
 # Leave setup script in root and adjust paths accordingly
 # fine tune docker-compose files (settings, paths, etc.)
@@ -89,6 +88,9 @@ chown -R 1000:0 /data
 # Rename project to Slack-Watchtower
 
 
+# Pull images
+echo "### Pulling images, please be patient."
+docker-compose -f docker/build.yml pull
 
 # Start elasticsearch for the first time to gen certs and passwords
 echo "### Running Elasticsearch for the first time, please be patient while generating certificates and passwords."

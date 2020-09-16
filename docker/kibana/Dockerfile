@@ -53,7 +53,7 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     rm -rf /var/cache/apk/*
 #
 # Healthcheck
-HEALTHCHECK --retries=10 CMD curl -s -XGET 'https://127.0.0.1:5601'
+HEALTHCHECK --retries=10 CMD curl -s --cacert /usr/share/kibana/config/certs/ca/ca.crt https://localhost:5601 >/dev/null; if [ $? == 0 ]; then echo 0; else echo 1; fi
 #
 # Start kibana
 STOPSIGNAL SIGKILL

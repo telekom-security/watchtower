@@ -2,6 +2,8 @@
 
 # Vars
 myPACKAGES="curl docker.io docker-compose git grc pwgen"
+myINSTPATH="/opt/watchtower"
+myGITREPO="https://github.com/t3chn0m4g3/watchtower"
 
 # Got root?
 myWHOAMI=$(whoami)
@@ -47,9 +49,20 @@ if [ "$myINST" != "" ]
     echo "All dependencies are met."
 fi
 
+# Check if cloned to /opt/watchtower
+myPATH=$(pwd)
+if [ "$myPATH" != "$myINSTPATH" ];
+  then
+    echo "Watchtower needs to be installed into $myINSTPATH."
+    echo "Cloning and restarting setup from correct path."
+    git clone $myGITREPO
+    cd $myINSTPATH
+    ./$0
+    exit
+fi
+
 exit
 
-# Check path, we want /opt/watchtower
 # Automatic install via GitHub
 # Leave setup script in root and adjust paths accordingly
 # fine tune docker-compose files (settings, paths, etc.)

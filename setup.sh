@@ -63,9 +63,15 @@ if [ "$myPATH" != "$myINSTPATH" ];
     exit
 fi
 
-exit
+# Create folders
+mkdir -vp /data/elastic/{certs,conf,log,data} \
+	  /data/slack-watchtower
+chmod -R 770 /data
+chown -R 1000:0 /data
 
 # Automatic install via GitHub
+# Pull images
+# First run of everything
 # Leave setup script in root and adjust paths accordingly
 # fine tune docker-compose files (settings, paths, etc.)
 # Replace token for Watchman
@@ -78,20 +84,20 @@ exit
 
 # Start elasticsearch for the first time to gen certs and passwords
 echo "Running Elasticsearch for the first time, please be patient while generating certificates and passwords."
-docker-compose -f elasticsearch/docker-compose.yml up -d
+docker-compose -f docker/elasticsearch/docker-compose.yml up -d
 docker logs -f elasticsearch 2>&1 | grep -m 1 "Cluster health status changed from [YELLOW] to [GREEN]"
-docker-compose -f elasticsearch/docker-compose.yml down -v
+docker-compose -f docker/elasticsearch/docker-compose.yml down -v
 
 # Convert passwords, so we can source them as vars
 cat /data/elastic/conf/passwords | grep "PASSWORD" | cut -d " " -f 2- | tr -d " " > /data/elastic/conf/passwords.source
 source /data/elastic/conf/passwords.source
 
 # Replace passwords in docker-compose.yml, so Elastic Stack can start properly just out of the box
-sed -i '/ELASTICSEARCH_USERNAME: kibana_system/!b;n;c\      ELASTICSEARCH_PASSWORD: '$kibana_system'' docker-compose.yml
-sed -i '/ELASTICSEARCH_USERNAME: elastic/!b;n;c\      ELASTICSEARCH_PASSWORD: '$elastic'' docker-compose.yml
-sed -i "s/ELASTICSEARCH_OBJECTS_ENCRYPTION_KEY.*$/ELASTICSEARCH_OBJECTS_ENCRYPTION_KEY: $(pwgen -cnsB 32 1)/" docker-compose.yml
-sed -i "s/ELASTICSEARCH_SECURITY_ENCRYPTION_KEY.*$/ELASTICSEARCH_SECURITY_ENCRYPTION_KEY: $(pwgen -cnsB 32 1)/" docker-compose.yml
-sed -i "s/ELASTICSEARCH_REPORTING_ENCRYPTION_KEY.*$/ELASTICSEARCH_REPORTING_ENCRYPTION_KEY: $(pwgen -cnsB 32 1)/" docker-compose.yml
+sed -i '/ELASTICSEARCH_USERNAME: kibana_system/!b;n;c\      ELASTICSEARCH_PASSWORD: '$kibana_system'' docker/docker-compose.yml
+sed -i '/ELASTICSEARCH_USERNAME: elastic/!b;n;c\      ELASTICSEARCH_PASSWORD: '$elastic'' docker/docker-compose.yml
+sed -i "s/ELASTICSEARCH_OBJECTS_ENCRYPTION_KEY.*$/ELASTICSEARCH_OBJECTS_ENCRYPTION_KEY: $(pwgen -cnsB 32 1)/" docker/docker-compose.yml
+sed -i "s/ELASTICSEARCH_SECURITY_ENCRYPTION_KEY.*$/ELASTICSEARCH_SECURITY_ENCRYPTION_KEY: $(pwgen -cnsB 32 1)/" docker/docker-compose.yml
+sed -i "s/ELASTICSEARCH_REPORTING_ENCRYPTION_KEY.*$/ELASTICSEARCH_REPORTING_ENCRYPTION_KEY: $(pwgen -cnsB 32 1)/" docker/docker-compose.yml
 
 # Remove passwords in source format
 rm /data/elastic/conf/passwords.source

@@ -2,7 +2,7 @@
 # If this is the first start of elastic search we need to generate certificates and users
 if [[ ! -f /data/elastic/certs/bundle.zip ]]; 
   then
-    echo "First start, generating certs ..."
+    echo "First start - generating certs and passwords ..."
     /usr/share/elasticsearch/bin/elasticsearch-certutil cert --silent --pem --in /usr/share/elasticsearch/config/instances.yml -out /usr/share/elasticsearch/config/certs/bundle.zip;
     unzip /usr/share/elasticsearch/config/certs/bundle.zip -d /usr/share/elasticsearch/config/certs;
     /usr/share/elasticsearch/bin/elasticsearch &

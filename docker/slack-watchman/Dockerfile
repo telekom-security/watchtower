@@ -19,7 +19,6 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     cd slack-watchman && \
     chmod 700 setup.py && \
     git checkout 89a9f3424782569d3fc0312900c450f560f2219c && \
-   # sed -i "s/'type': detect_type/'detection.type': detect_type/" slack_watchman/logger.py && \
     sed -i 's/"type": "%(type)s"/"detection.type": "%(type)s"/' slack_watchman/logger.py && \
 # Setup Slack-Watchman
     python3 setup.py install && \

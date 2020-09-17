@@ -38,7 +38,7 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     rm -rf /var/cache/apk/*
 #
 # Healthcheck
-HEALTHCHECK --retries=10 CMD curl -s -XGET 'http://127.0.0.1:9600'
+HEALTHCHECK --retries=10 CMD curl -s --cacert /usr/share/elasticsearch/config/certs/ca/ca.crt -s http://127.0.0.1:9600 >/dev/null; if [ $? == 0 ]; then echo 0; else echo 1; fi
 #
 # Start logstash
 #CMD /usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf --config.reload.automatic --java-execution --log.level debug

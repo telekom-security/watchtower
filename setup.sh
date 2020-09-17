@@ -1,9 +1,20 @@
 #!/bin/bash
 
+# TODOs
+# Automatic install via GitHub
+# Set alias (grc, dps)
+# Set fancy prompt
+# Push config to ELK (dashboards and stuff) => use scripts from T-Pot and ask for credentials on start
+# Build dashboards
+
 # Vars
 myPACKAGES="curl docker.io docker-compose git grc pwgen"
 myINSTPATH="/opt/watchtower"
 myGITREPO="https://github.com/t3chn0m4g3/watchtower"
+myCRONJOBS="
+# Run Slack-Watchman daily
+0 6 * * *      root    docker-compose -f /opt/watchtower/docker/slack-watchman/docker-compose.yml up
+"
 
 # Got root?
 myWHOAMI=$(whoami)
@@ -77,17 +88,6 @@ mkdir -vp /data/elastic/{certs,conf,log,data} \
 chmod -R 770 /data
 chown -R 1000:0 /data
 
-# Automatic install via GitHub
-# First run of everything
-# Leave setup script in root and adjust paths accordingly
-# fine tune docker-compose files (settings, paths, etc.)
-# Replace token for Watchman
-# Set alias (grc, dps)
-# Set fancy prompt
-# Push config to ELK (dashboards and stuff)
-# Rename project to Slack-Watchtower
-
-
 # Pull images
 echo "### Pulling images, please be patient."
 docker-compose -f docker/build.yml pull
@@ -111,6 +111,16 @@ sed -i "s/ELASTICSEARCH_REPORTING_ENCRYPTION_KEY.*$/ELASTICSEARCH_REPORTING_ENCR
 
 # Remove passwords in source format
 rm /data/elastic/conf/passwords.source
+
+# Add cronjob
+myCHECK=$(grep "slack-watchman" /etc/crontab)
+if [ "$myCHECK" == "" ];
+  then
+    echo "### Now adding cronjob ..."
+    echo "$myCRONJOBS" | tee -a /etc/crontab
+  else
+    echo "Cronjob is already set."
+fi
 
 # Done.
 exec ./start.sh

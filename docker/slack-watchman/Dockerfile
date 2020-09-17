@@ -15,10 +15,12 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     cd /root && \
 #
 # Build Slack-Watchman
-    git clone https://github.com/t3chn0m4g3/slack-watchman -b develop && \
+    git clone https://github.com/PaperMtn/slack-watchman -b develop && \
     cd slack-watchman && \
     chmod 700 setup.py && \
-    git checkout 1ed947daf7ba2c211fa471b3155b99737b61c014 && \
+    git checkout 89a9f3424782569d3fc0312900c450f560f2219c && \
+   # sed -i "s/'type': detect_type/'detection.type': detect_type/" slack_watchman/logger.py && \
+    sed -i 's/"type": "%(type)s"/"detection.type": "%(type)s"/' slack_watchman/logger.py && \
 # Setup Slack-Watchman
     python3 setup.py install && \
 #

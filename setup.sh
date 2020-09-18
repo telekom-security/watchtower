@@ -13,14 +13,19 @@ myINSTPATH="/opt/watchtower"
 myGITREPO="https://github.com/t3chn0m4g3/watchtower"
 myCRONJOBS="
 # Run Slack-Watchman daily
-0 6 * * *      root    docker-compose -f /opt/watchtower/docker/slack-watchman/docker-compose.yml up
+0 6 * * *      root    /opt/watchtower/sw-runner.sh
 "
+
+# Installer
+echo "### Watchtower Installer"
+echo
 
 # Got root?
 myWHOAMI=$(whoami)
 if [ "$myWHOAMI" != "root" ]
   then
     echo "### Need to run as root ..."
+    echo
     exit
 fi
 
@@ -28,6 +33,7 @@ fi
 if [ -f /data/elastic/certs/bundle.zip ];
   then
     echo "### Certificate bundle already exists. Aborting."
+    echo
     exit
 fi
 
@@ -40,9 +46,11 @@ if [ "$myVM_MAX_MAP_COUNT" == "" ];
     echo "### vm.max_map_count = 262144" | tee -a /etc/sysctl.conf 
     echo
     echo "### Reloading Kernel Parameter ..."
+    echo
     sysctl -p
   else
     echo "$myVM_MAX_MAP_COUNT is already set."
+    echo
 fi
 
 # Check for deps
@@ -58,6 +66,7 @@ done
 if [ "$myINST" != "" ]
   then
     echo "### Need to install some missing packages ..."
+    echo
     apt-get update -y
     for myDEPS in $myINST;
     do
@@ -65,6 +74,7 @@ if [ "$myINST" != "" ]
     done
   else
     echo "### All dependencies are met."
+    echo
 fi
 
 # Check if cloned to /opt/watchtower
@@ -73,6 +83,7 @@ if [ "$myPATH" != "$myINSTPATH" ];
   then
     echo "### Watchtower needs to be installed into $myINSTPATH."
     echo "### Cloning and restarting setup from correct path."
+    echo
     mkdir -p /opt
     cd /opt
     git clone $myGITREPO
@@ -83,6 +94,7 @@ fi
 
 # Create folders
 echo "### Creating folders ..."
+echo
 mkdir -vp /data/elastic/{certs,conf,log,data} \
           /data/slack-watchman
 chmod -R 770 /data
@@ -90,10 +102,12 @@ chown -R 1000:0 /data
 
 # Pull images
 echo "### Pulling images, please be patient."
+echo
 docker-compose -f docker/build.yml pull
 
 # Start elasticsearch for the first time to gen certs and passwords
 echo "### Running Elasticsearch for the first time, please be patient while generating certificates and passwords."
+echo
 docker-compose -f docker/elasticsearch/docker-compose.yml up -d
 docker logs -f elasticsearch 2>&1 | grep -m 1 "\[GREEN\]"
 docker-compose -f docker/elasticsearch/docker-compose.yml down -v
@@ -113,16 +127,21 @@ sed -i "s/ELASTICSEARCH_REPORTING_ENCRYPTION_KEY.*$/ELASTICSEARCH_REPORTING_ENCR
 rm /data/elastic/conf/passwords.source
 
 # Add cronjob
-myCHECK=$(grep "slack-watchman" /etc/crontab)
+myCHECK=$(grep "watchtower" /etc/crontab)
 if [ "$myCHECK" == "" ];
   then
     echo "### Now adding cronjob ..."
     echo "$myCRONJOBS" | tee -a /etc/crontab
+    echo
   else
     echo "Cronjob is already set."
+    echo
 fi
 
 # Done.
 exec ./start.sh
-echo "### Keep the passwords in a safe place and delete them afterwards from /data/elastic/conf/passwords."
-echo "### Done.
+echo "### Kibana superuser: elastic / password: $elastic"
+echo "### All generated passwords are stored in /data/elastic/conf/passwords."
+echo "### Retrieve the passwords, store them in a safe place and delete the passwords file."
+echo "### Done."
+echo

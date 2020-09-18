@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Got root?
+myWHOAMI=$(whoami)
+if [ "$myWHOAMI" != "root" ]
+  then
+    echo "### Need to run as root ..."
+    echo
+    exit
+fi
+
 ### Define Slack-Watchman runner
 fuSWRUN () {
 local SLACK_WATCHMAN_NAME="$1"

@@ -66,4 +66,4 @@ services:
     image: "ghcr.io/t3chn0m4g3/logstash-wt:latest"
     volumes:
      - /data:/data
-#     - /root/slacktective/docker/elastic/logstash/dist/logstash.conf:/etc/logstash/conf.d/logstash.conf
+#     - /root/watchtower/docker/logstash/dist/logstash.conf:/etc/logstash/conf.d/logstash.conf

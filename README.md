@@ -8,6 +8,8 @@ Based on an adjustable ruleset Slack-Watchman will run on a daily basis and dete
 
 Logstash will ingest the JSON based logfiles and feed them into an Elasticsearch index while a pre-configured Kibana dashboard will beautifully visualize all the captured detections.
 
+![Watchtower](dashboard.png)
+
 ## Prerequisites
 Watchtower can be installed on top of a previously installed Debian 10.x and will automatically download all required packages, such as ...
 ```

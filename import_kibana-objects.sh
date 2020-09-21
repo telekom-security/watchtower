@@ -15,6 +15,7 @@ while true;
       then
 	echo
         echo "### Kibana API is available, now importing objects."
+	sleep 5
         break
       else
         sleep 2

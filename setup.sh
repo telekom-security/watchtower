@@ -1,14 +1,7 @@
 #!/bin/bash
 
-# TODOs
-# Automatic install via GitHub
-# Set alias (grc, dps)
-# Set fancy prompt
-# Push config to ELK (dashboards and stuff) => use scripts from T-Pot and ask for credentials on start
-# Build dashboards
-
 # Vars
-myPACKAGES="curl docker.io docker-compose git grc pwgen"
+myPACKAGES="curl docker.io docker-compose git grc jq pwgen"
 myINSTPATH="/opt/watchtower"
 myGITREPO="https://github.com/t3chn0m4g3/watchtower"
 myCRONJOBS="
@@ -138,8 +131,25 @@ if [ "$myCHECK" == "" ];
     echo
 fi
 
-# Done.
+# Ready to start and import objects
 exec ./start.sh
+echo "### Waiting for Kibana to be healthy, so objects can be imported."
+echo -n "### Please be patient "
+while true;
+  do
+    myCHECK=$(docker ps | grep kibana | grep healthy | wc -l)
+    if [ "$myCHECK" == "1" ];
+      then
+        echo "### Kibana is alive. Now importing objects."
+        exec ./import_kibana-objects.sh elastic $elastic kibana-objects.tgz
+        break
+      else
+        echo -n "."
+        sleep 2
+    fi
+done
+
+# Done
 echo "### Kibana superuser: elastic / password: $elastic"
 echo "### All generated passwords are stored in /data/elastic/conf/passwords."
 echo "### Retrieve the passwords, store them in a safe place and delete the passwords file."

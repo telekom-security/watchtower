@@ -17,6 +17,7 @@ echo
 myWHOAMI=$(whoami)
 if [ "$myWHOAMI" != "root" ]
   then
+    echo
     echo "### Need to run as root ..."
     echo
     exit
@@ -25,6 +26,7 @@ fi
 # Do not run again if certificate bundle exists already
 if [ -f /data/elastic/certs/bundle.zip ];
   then
+    echo
     echo "### Certificate bundle already exists. Aborting."
     echo
     exit
@@ -34,9 +36,10 @@ fi
 myVM_MAX_MAP_COUNT=$(grep "vm.max_map_count" /etc/sysctl.conf)
 if [ "$myVM_MAX_MAP_COUNT" == "" ];
   then
+    echo
     echo "### Now patching sysctl.conf ..."
     echo
-    echo "### vm.max_map_count = 262144" | tee -a /etc/sysctl.conf 
+    echo "vm.max_map_count = 262144" | tee -a /etc/sysctl.conf 
     echo
     echo "### Reloading Kernel Parameter ..."
     echo
@@ -58,6 +61,7 @@ do
 done
 if [ "$myINST" != "" ]
   then
+    echo
     echo "### Need to install some missing packages ..."
     echo
     apt-get update -y
@@ -66,6 +70,7 @@ if [ "$myINST" != "" ]
       apt-get install $myDEPS -y
     done
   else
+    echo
     echo "### All dependencies are met."
     echo
 fi
@@ -74,6 +79,7 @@ fi
 myPATH=$(pwd)
 if [ "$myPATH" != "$myINSTPATH" ];
   then
+    echo
     echo "### Watchtower needs to be installed into $myINSTPATH."
     echo "### Cloning and restarting setup from correct path."
     echo
@@ -86,6 +92,7 @@ if [ "$myPATH" != "$myINSTPATH" ];
 fi
 
 # Create folders
+echo 
 echo "### Creating folders ..."
 echo
 mkdir -vp /data/elastic/{certs,conf,log,data} \
@@ -94,11 +101,13 @@ chmod -R 770 /data
 chown -R 1000:0 /data
 
 # Pull images
-echo "### Pulling images, please be patient."
+echo
+echo "### Pulling docker images, please be patient."
 echo
 docker-compose -f docker/build.yml pull
 
 # Start elasticsearch for the first time to gen certs and passwords
+echo
 echo "### Running Elasticsearch for the first time, please be patient while generating certificates and passwords."
 echo
 docker-compose -f docker/elasticsearch/docker-compose.yml up -d
@@ -123,25 +132,29 @@ rm /data/elastic/conf/passwords.source
 myCHECK=$(grep "watchtower" /etc/crontab)
 if [ "$myCHECK" == "" ];
   then
+    echo
     echo "### Now adding cronjob ..."
     echo "$myCRONJOBS" | tee -a /etc/crontab
     echo
   else
-    echo "Cronjob is already set."
+    echo "### Cronjob is already set."
     echo
 fi
 
 # Ready to start and import objects
-exec ./start.sh
-echo "### Waiting for Kibana to be healthy, so objects can be imported."
+./start.sh
+echo
+echo "### Waiting for Kibana to be healthy."
 echo -n "### Please be patient "
 while true;
   do
     myCHECK=$(docker ps | grep kibana | grep healthy | wc -l)
     if [ "$myCHECK" == "1" ];
       then
-        echo "### Kibana is alive. Now importing objects."
-        exec ./import_kibana-objects.sh elastic $elastic kibana-objects.tgz
+	echo
+        echo "### Kibana is alive."
+	echo
+        ./import_kibana-objects.sh elastic $elastic kibana-objects.tgz
         break
       else
         echo -n "."

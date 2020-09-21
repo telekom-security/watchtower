@@ -4,15 +4,23 @@
 myES="https://127.0.0.1:9200/"
 myKIBANA="https://127.0.0.1:5601/"
 myCURL="curl -u "$1":"$2" --insecure -s"
-myESSTATUS=$($myCURL -XGET ''$myES'_cluster/health' | jq '.' | grep -c green)
-if ! [ "$myESSTATUS" = "1" ]
-  then
-    echo "### Elasticsearch is not available."
-    exit
-  else
-    echo "### Elasticsearch is available, now continuing."
-    echo
-fi
+
+# Check if Kibana API is available
+echo "### Waiting for Kibana API to be reachable."
+echo -n "### Please be patient "
+while true;
+  do
+    myCHECK=$($myCURL $myKIBANA/api | grep 404 | wc -l)
+    if [ "$myCHECK" == 1 ];
+      then
+	echo
+        echo "### Kibana API is available, now importing objects."
+        break
+      else
+        sleep 2
+        echo -n "."
+    fi
+done
 
 # Set vars
 myDUMP=$3

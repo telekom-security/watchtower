@@ -32,7 +32,7 @@ git clone https://github.com/telekom-security/watchtower /opt/watchtower
 
 Run the `setup.sh` script:
 ```
-cd /opt/Watchtower
+cd /opt/watchtower
 ./setup.sh
 ```
 

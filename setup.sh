@@ -3,7 +3,7 @@
 # Vars
 myPACKAGES="curl docker.io docker-compose git grc jq pwgen"
 myINSTPATH="/opt/watchtower"
-myGITREPO="https://github.com/t3chn0m4g3/watchtower"
+myGITREPO="https://github.com/telekom-security/watchtower"
 myCRONJOBS="
 # Run Slack-Watchman daily
 0 6 * * *      root    /opt/watchtower/sw-runner.sh

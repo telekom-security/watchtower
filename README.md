@@ -27,7 +27,7 @@ The following steps must be done as `root` (`su -`).
 
 Clone this repository into `/opt/watchtower`:
 ```
-git clone https://github.com/t3chn0m4g3/watchtower /opt/watchtower
+git clone https://github.com/telekom-security/watchtower /opt/watchtower
 ```
 
 Run the `setup.sh` script:

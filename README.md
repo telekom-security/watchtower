@@ -1,6 +1,6 @@
 # Watchtower
 
-Watchtower uses the [Elastic Stack](https://www.elastic.co/products/) and [Slack-Watchman](https://github.com/PaperMtn/slack-watchman) by @PaperMtn.
+Watchtower uses the [Elastic Stack](https://www.elastic.co/products/) and [Slack-Watchman](https://github.com/PaperMtn/slack-watchman) by [@PaperMtn](https://github.com/PaperMtn).
 
 Slack is a great tool for easy and convenient team collaboration and growing rapidly in popularity with home office becoming more widespread. As with other collaboration platforms, i.e. GitHub, it may happen that sensitive information get posted by accident or convenience while it should have never been posted.
 

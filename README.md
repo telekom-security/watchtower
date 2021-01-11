@@ -57,6 +57,17 @@ If this is a primary run with Slack-Watchman you can set the timeframe in `sw-ru
 
 For testing purposes you can run Slack-Watchman simply via `sw-runner.sh`. But keep in mind that each run will account against the API, once too hot your app will be put into cool off mode. Running once daily per registered Slack app is recommended.
 
+## Upgrades
+To upgrade just follow these simple steps from within the repo folder:
+```
+git pull
+cd docker
+docker-compose -f build.yml pull
+cd ..
+./stop.sh
+./start.sh
+```
+
 ## Licenses
 The software Watchtower is built on uses the following licenses.
 <br>GPLv3: [Github-Watchman](https://github.com/PaperMtn/github-watchman/blob/master/LICENSE)

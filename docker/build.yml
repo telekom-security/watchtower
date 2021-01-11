@@ -6,19 +6,19 @@ services:
 ## Elasticsearch service
   elasticsearch:
     build: elasticsearch/.
-    image: "ghcr.io/telekom-security/elasticsearch-wt:latest"
+    image: "dtagdevsec/elasticsearch-wt:latest"
 
 ## Kibana service
   kibana:
     build: kibana/.
-    image: "ghcr.io/telekom-security/kibana-wt:latest"
+    image: "dtagdevsec/kibana-wt:latest"
 
 ## Logstash service
   logstash:
     build: logstash/.
-    image: "ghcr.io/telekom-security/logstash-wt:latest"
+    image: "dtagdevsec/logstash-wt:latest"
 
 ## Slack-Watchman service
   slack-watchman:
     build: slack-watchman/.
-    image: "ghcr.io/telekom-security/slack-watchman:latest"
+    image: "dtagdevsec/slack-watchman:latest"

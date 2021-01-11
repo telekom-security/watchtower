@@ -29,7 +29,7 @@ docker run --name slack-watchman \
            --env SLACK_WATCHMAN_LOGFILE="$SLACK_WATCHMAN_LOGFILE" \
            --env SLACK_WATCHMAN_QUERY="$SLACK_WATCHMAN_QUERY" \
            --env SLACK_WATCHMAN_TIMEFRAME="$SLACK_WATCHMAN_TIMEFRAME" \
-           ghcr.io/telekom-security/slack-watchman:latest
+           dtagdevsec/slack-watchman:latest
 echo " - Done."
 echo
 }

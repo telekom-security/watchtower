@@ -9,7 +9,7 @@ services:
     restart: always
     environment:
      - LS_JAVA_OPTS=-Xms2048m -Xmx2048m
-    image: "ghcr.io/telekom-security/logstash-wt:latest"
+    image: "dtagdevsec/logstash-wt:latest"
     volumes:
      - /data:/data
 #     - /root/watchtower/docker/logstash/dist/logstash.conf:/etc/logstash/conf.d/logstash.conf

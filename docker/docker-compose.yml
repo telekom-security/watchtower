@@ -25,7 +25,7 @@ services:
     mem_limit: 4g
     ports:
      - "127.0.0.1:9200:9200"
-    image: "ghcr.io/telekom-security/elasticsearch-wt:latest"
+    image: "dtagdevsec/elasticsearch-wt:latest"
     volumes:
      - /data:/data
      - /data/elastic/certs:/usr/share/elasticsearch/config/certs
@@ -46,7 +46,7 @@ services:
       ELASTICSEARCH_OBJECTS_ENCRYPTION_KEY: CHANGEME
       ELASTICSEARCH_SECURITY_ENCRYPTION_KEY: CHANGEME
       ELASTICSEARCH_REPORTING_ENCRYPTION_KEY: CHANGEME
-    image: "ghcr.io/telekom-security/kibana-wt:latest"
+    image: "dtagdevsec/kibana-wt:latest"
     volumes:
      - /data/elastic/certs:/usr/share/kibana/config/certs
 
@@ -63,7 +63,7 @@ services:
     environment:
       ELASTICSEARCH_USERNAME: elastic
       ELASTICSEARCH_PASSWORD: CHANGEME
-    image: "ghcr.io/telekom-security/logstash-wt:latest"
+    image: "dtagdevsec/logstash-wt:latest"
     volumes:
      - /data:/data
 #     - /root/watchtower/docker/logstash/dist/logstash.conf:/etc/logstash/conf.d/logstash.conf

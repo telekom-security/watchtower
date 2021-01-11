@@ -5,4 +5,4 @@ services:
 ## Slack-Watchman service
   slack-watchman:
     build: .
-    image: "ghcr.io/telekom-security/slack-watchman:latest"
+    image: "dtagdevsec/slack-watchman:latest"

@@ -1,7 +1,7 @@
 FROM alpine:3.12
 #
 # VARS
-ENV LS_VER=7.9.1
+ENV LS_VER=7.10.1
 # Include dist
 ADD dist/ /root/dist/
 #
@@ -20,8 +20,9 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
 # Get and install packages
     cd /root/dist/ && \
     mkdir -p /usr/share/logstash/ && \
-    aria2c -s 16 -x 16 https://artifacts.elastic.co/downloads/logstash/logstash-$LS_VER.tar.gz && \
-    tar xvfz logstash-$LS_VER.tar.gz --strip-components=1 -C /usr/share/logstash/ && \
+    aria2c -s 16 -x 16 https://artifacts.elastic.co/downloads/logstash/logstash-$LS_VER-linux-x86_64.tar.gz && \
+    tar xvfz logstash-$LS_VER-linux-x86_64.tar.gz --strip-components=1 -C /usr/share/logstash/ && \
+    rm -rf /usr/share/logstash/jdk && \
 #
 # Add and move files
     cd /root/dist/ && \

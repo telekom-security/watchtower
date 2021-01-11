@@ -59,6 +59,8 @@ For testing purposes you can run Slack-Watchman simply via `sw-runner.sh`. But k
 
 ## Licenses
 The software Watchtower is built on uses the following licenses.
+<br>GPLv3: [Github-Watchman](https://github.com/PaperMtn/github-watchman/blob/master/LICENSE)
+<br>GPLv3: [Gitlab-Watchman](https://github.com/PaperMtn/gitlab-watchman/blob/master/LICENSE)
 <br>GPLv3: [Slack-Watchman](https://github.com/PaperMtn/slack-watchman/blob/master/LICENSE)
 <br>Apache 2 License: [elasticsearch](https://github.com/elasticsearch/elasticsearch/blob/master/LICENSE.txt), [logstash](https://github.com/elasticsearch/logstash/blob/master/LICENSE), [kibana](https://github.com/elasticsearch/kibana/blob/master/LICENSE.md), [docker](https://github.com/docker/docker/blob/master/LICENSE)
 <br> Other: [Debian licensing](https://www.debian.org/legal/licenses/)

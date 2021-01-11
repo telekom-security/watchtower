@@ -15,12 +15,23 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     cd /root && \
 #
 # Build Slack-Watchman
-    git clone https://github.com/PaperMtn/slack-watchman -b 3.0.6 && \
+    git clone https://github.com/PaperMtn/slack-watchman -b 3.0.10 && \
     cd slack-watchman && \
-#    git checkout ab1a80bfadbd70e1de4c3a43b1434f22d4270369 && \
     chmod 700 setup.py && \
-#    sed -i 's/"type": "%(type)s"/"detection.type": "%(type)s"/' slack_watchman/logger.py && \
-# Setup Slack-Watchman
+    python3 setup.py install && \
+#
+# Build Github-Watchman
+    cd /root && \
+    git clone https://github.com/PaperMtn/github-watchman -b 1.0.1 && \
+    cd github-watchman && \
+    chmod 700 setup.py && \
+    python3 setup.py install && \
+#
+# Build Gitlab-Watchman
+    cd /root && \
+    git clone https://github.com/PaperMtn/gitlab-watchman -b 1.4.0 && \
+    cd gitlab-watchman && \
+    chmod 700 setup.py && \
     python3 setup.py install && \
 #
 # Clean up
@@ -30,7 +41,7 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     rm -rf /root/* && \
     rm -rf /var/cache/apk/*
 #
-# Run Slack-Watchman
+# Run one of the Watchmen
 STOPSIGNAL SIGINT
 WORKDIR /opt/slack-watchman/log
 CMD slack-watchman $SLACK_WATCHMAN_TIMEFRAME $SLACK_WATCHMAN_QUERY --output stdout > $SLACK_WATCHMAN_LOGFILE

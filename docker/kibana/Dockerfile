@@ -1,7 +1,7 @@
-FROM node:10.22.0-alpine
+FROM node:10.22.1-alpine
 #
 # VARS
-ENV KB_VER=7.9.1
+ENV KB_VER=7.10.1
 # 
 # Setup env and apt
 RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \

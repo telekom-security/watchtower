@@ -5,4 +5,4 @@ services:
 ## Slack-Watchman service
   slack-watchman:
     build: .
-    image: "dtagdevsec/slack-watchman:latest"
+    image: "dtagdevsec/runner-wt:latest"

@@ -5,8 +5,8 @@ myPACKAGES="curl docker.io docker-compose git grc jq pwgen"
 myINSTPATH="/opt/watchtower"
 myGITREPO="https://github.com/telekom-security/watchtower"
 myCRONJOBS="
-# Run Slack-Watchman daily
-0 6 * * *      root    /opt/watchtower/sw-runner.sh
+# Run daily
+0 6 * * *      root    /opt/watchtower/runner.sh
 "
 
 # Installer
@@ -96,7 +96,7 @@ echo
 echo "### Creating folders ..."
 echo
 mkdir -vp /data/elastic/{certs,conf,log,data} \
-          /data/slack-watchman
+          /data/runner
 chmod -R 770 /data
 chown -R 1000:0 /data
 

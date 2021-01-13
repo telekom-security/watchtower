@@ -18,7 +18,7 @@ services:
     build: logstash/.
     image: "dtagdevsec/logstash-wt:latest"
 
-## Slack-Watchman service
-  slack-watchman:
-    build: slack-watchman/.
-    image: "dtagdevsec/slack-watchman:latest"
+## Runner service
+  runner:
+    build: runner/.
+    image: "dtagdevsec/runner-wt:latest"

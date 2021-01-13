@@ -11,7 +11,7 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
 	     py3-termcolor \
              python3 \
              python3-dev && \
-    mkdir -p /opt/slack-watchman/log && \
+    mkdir -p /var/log/runner && \
     cd /root && \
 #
 # Build Slack-Watchman
@@ -41,7 +41,5 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     rm -rf /root/* && \
     rm -rf /var/cache/apk/*
 #
-# Run one of the Watchmen
 STOPSIGNAL SIGINT
-WORKDIR /opt/slack-watchman/log
-CMD slack-watchman $SLACK_WATCHMAN_TIMEFRAME $SLACK_WATCHMAN_QUERY --output stdout > $SLACK_WATCHMAN_LOGFILE
+WORKDIR /var/log/runner

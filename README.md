@@ -61,9 +61,7 @@ For testing purposes you can run Slack-Watchman simply via `sw-runner.sh`. But k
 To upgrade just follow these simple steps from within the repo folder:
 ```
 git pull
-cd docker
-docker-compose -f build.yml pull
-cd ..
+docker-compose -f docker/build.yml pull
 ./stop.sh
 ./start.sh
 ```

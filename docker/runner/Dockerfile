@@ -20,23 +20,15 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     chmod 700 setup.py && \
     python3 setup.py install && \
 #
-# Build Github-Watchman
+# Build TruffleHog3
     cd /root && \
-    git clone https://github.com/PaperMtn/github-watchman -b 1.0.1 && \
-    cd github-watchman && \
-    chmod 700 setup.py && \
-    python3 setup.py install && \
-#
-# Build Gitlab-Watchman
-    cd /root && \
-    git clone https://github.com/PaperMtn/gitlab-watchman -b 1.4.0 && \
-    cd gitlab-watchman && \
+    git clone https://github.com/t3chn0m4g3/trufflehog3 && \
+    cd trufflehog3 && \
     chmod 700 setup.py && \
     python3 setup.py install && \
 #
 # Clean up
     apk del --purge build-base \
-                    git \
 		    python3-dev && \
     rm -rf /root/* && \
     rm -rf /var/cache/apk/*

@@ -163,6 +163,7 @@ while true;
 done
 
 # Done
+cd /opt/watchtower
 echo "### Kibana superuser: elastic / password: $elastic"
 echo "### All generated passwords are stored in /data/elastic/conf/passwords."
 echo "### Retrieve the passwords, store them in a safe place and delete the passwords file."
